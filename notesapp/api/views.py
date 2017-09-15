@@ -1,3 +1,13 @@
+#from django.db.models import Q
+
+from rest_framework.filters import (
+	SearchFilter,
+	OrderingFilter,
+	DjangoFilterBackend,
+	)
+from .filters import TagsFilter
+
+
 from rest_framework.viewsets import ModelViewSet
 from .serializers import NoteSerializer
 from notesapp.models import Notes
@@ -8,7 +18,6 @@ from rest_framework.permissions import(
     AllowAny,
     IsAuthenticated,
     IsAdminUser,
-    IsAuthenticatedOrReadOnly,
 )
 
 
@@ -17,9 +26,15 @@ class NoteViewSet(ModelViewSet):
 	permission_classes = [IsOwner] #only the owner who has created the notes can view this notes.class IsOwner is created in permissions.py file.
 	queryset=Notes.objects.all()
 
+	filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
+	#filter_fields = ('tags',)
+
+	search_fields = ['title','content','tags','reminder_date']
+	ordering = ('-created_date')
+
 	def perform_create(self,serializer):
 		serializer.save(user=self.request.user)
-		
+
      #overriding method list so that note list is shown to the user who has specificly created that note
 	def list(self,request,*args,**kwargs):
 		queryset = self.filter_queryset(self.get_queryset())
@@ -28,7 +43,7 @@ class NoteViewSet(ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user.id
-		queryset = Notes.objects.filter(user=user)
-		return queryset
+		queryset_list = Notes.objects.filter(user=user)
+		return queryset_list
 
 

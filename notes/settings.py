@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     #third party apps
     'rest_framework',
+    'django_filters',
     'multiselectfield',
 ]
 
