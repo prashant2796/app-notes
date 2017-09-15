@@ -9,6 +9,6 @@ from .routers import router
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login', UserLoginViewSet.as_view(), name='login'),
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls,namespace='myapp')),
 
 ]
