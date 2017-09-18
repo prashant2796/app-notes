@@ -7,11 +7,11 @@ from multiselectfield import MultiSelectField
 
 
 
-TAGS = (('work-office', 'Work/Office'),
-          ('home', 'Home'),
-          ('school-college', 'School/College'),
-          ('hobby', 'Hobby'),
-          ('others', 'Others'))
+TAGS = (('Work-Office', 'Work/Office'),
+          ('Home', 'Home'),
+          ('School-College', 'School/College'),
+          ('Hobby', 'Hobby'),
+          ('Others', 'Others'))
 
 # Create your models here.
 class Notes(models.Model):

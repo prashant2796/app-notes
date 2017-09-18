@@ -5,8 +5,6 @@ from rest_framework.filters import (
 	OrderingFilter,
 	DjangoFilterBackend,
 	)
-from .filters import TagsFilter
-
 
 from rest_framework.viewsets import ModelViewSet
 from .serializers import NoteSerializer
