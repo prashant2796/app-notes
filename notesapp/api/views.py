@@ -21,7 +21,7 @@ from rest_framework.permissions import(
 
 class NoteViewSet(ModelViewSet):
 	serializer_class = NoteSerializer
-	permission_classes = [IsOwner] #only the owner who has created the notes can view this notes.class IsOwner is created in permissions.py file.
+	permission_classes = [IsAuthenticated,IsOwner] #only the owner who has created the notes can view this notes.class IsOwner is created in permissions.py file.
 	queryset=Notes.objects.all()
 
 	filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
