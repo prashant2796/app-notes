@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^api/login', UserLoginViewSet.as_view(), name='login'),
     url(r'^api/', include(router.urls,namespace='myapp')),
     url(r'^api/auth/token/', obtain_jwt_token),
+    
 
 ]

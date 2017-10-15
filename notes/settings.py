@@ -25,7 +25,7 @@ SECRET_KEY = 'qch&vs*km=^k6d!x=mkwae2jla=lq=v3x*6rn*p8u^05d1ikkq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['NotesUsingDrf.pythonanywhere.com']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'notesapp',
     'accounts',
+    'checklist',
     #third party apps
     'rest_framework',
     'django_filters',
