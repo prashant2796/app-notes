@@ -25,8 +25,6 @@ class NoteViewSet(ModelViewSet):
 	queryset=Notes.objects.all()
 
 	filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
-	#filter_fields = ('tags',)
-
 	search_fields = ['title','content','tags','reminder_date']
 	ordering = ('-created_date')
 

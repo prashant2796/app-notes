@@ -2,37 +2,33 @@ from django.conf import settings
 
 from django.db import models
 
+from datetime import date
+
+from django.utils import timezone
+from multiselectfield import MultiSelectField
+
+
+
 
 
 # Create your models here.
-	
 
-# class Task(models.Model):
-
-# 	title = models.CharField(max_length=80)
-
-# class Checklist(models.Model):
-
-# 	checklist = models.ForeignKey(Task, related_name='checklists',blank=True,null=True)
-# 	tick = models.BooleanField(default=False)
-# 	task_task = models.CharField(max_length=100,default='')
-
-# 	class Meta:
-# 		unique_together = ('tasks', 'is_completed')
-# 		ordering = ['is_completed']
-
-
-# 	def __str__(self):
-# 		return str(self.user.username)
-
+TAGS = (('Wk/Of', 'Work/Office'),
+          ('Hm', 'Home'),
+          ('Sc/Co', 'School/College'),
+          ('Ho', 'Hobby'))
 
 class Checklist(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,default=1, on_delete=models.CASCADE)
-    title = models.CharField(max_length=30,default='')
-   
+    title = models.CharField(max_length=30,default='',blank=True)
+    created_date = models.DateField(default=timezone.now().date())
+    reminder_date = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True,auto_now_add=False,null=True)
+    tags = MultiSelectField(choices=TAGS, blank=True, null=True)
 
     def __str__(self):
         return str(self.user.username)
+
 
 
 class Todotask(models.Model):
@@ -47,3 +43,12 @@ class Todotask(models.Model):
 
 	def get_text(self):
 		return self.task_text
+
+class Customtags(models.Model):
+	checklist = models.ForeignKey(Checklist, related_name='custom_tags', default=0, on_delete=models.CASCADE)
+	user_tag=models.CharField(max_length=50,blank=True,null=True)
+
+	def __str__(self):
+		return self.user_tag
+
+

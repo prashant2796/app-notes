@@ -1,6 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
-
+from rest_framework.filters import (
+	SearchFilter,
+	OrderingFilter,
+	DjangoFilterBackend,
+	)
 from rest_framework import status
 from .serializers import ChecklistSerializer,TaskSerializer
 from notesapp.api.permissions import IsOwner
@@ -13,11 +17,16 @@ from rest_framework.permissions import(
 )
 
 
+
 class ChecklistViewSet(ModelViewSet):
 	permission_classes = [IsAuthenticated,IsOwner]
 	queryset=Checklist.objects.all()
 	serializer_class = TaskSerializer
-	#detail_serializer_class =ChecklistDetailSerializer
+
+	filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
+
+	search_fields = ['title','tags','reminder_date','checklists__tick','checklists__task_text']
+	ordering = ('-created_date')
 
 	def create(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
@@ -38,6 +47,12 @@ class ChecklistViewSet(ModelViewSet):
 		user = self.request.user.id
 		queryset = Checklist.objects.filter(user=user)   
 		return queryset
+
+	# def post_save(self, checklist, *args, **kwargs):
+	# 	if type(checklist.tags) is list:
+	# 		saved_checklist = Checklist.objects.get(pk=checklist.pk)
+	# 		for tag in checklist.tags:
+	# 			saved_checklist.tags.add(tag)
 
 	
 

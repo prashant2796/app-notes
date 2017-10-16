@@ -25,7 +25,7 @@ SECRET_KEY = 'qch&vs*km=^k6d!x=mkwae2jla=lq=v3x*6rn*p8u^05d1ikkq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['NotesUsingDrf.pythonanywhere.com']
+ALLOWED_HOSTS = ['NotesUsingDrf.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'multiselectfield',
+    
 ]
 
 MIDDLEWARE_CLASSES = [
