@@ -25,8 +25,8 @@ class ChecklistViewSet(ModelViewSet):
 
 	filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
 
-	search_fields = ['title','tags','reminder_date','checklists__tick','checklists__task_text']
-	ordering = ('-created_date')
+	search_fields = ['title','tags','reminder_date','checklists__task_text','custom_tags__user_tag']
+	ordering = ('-date_modified','-created_date')
 
 	def create(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
@@ -48,11 +48,14 @@ class ChecklistViewSet(ModelViewSet):
 		queryset = Checklist.objects.filter(user=user)   
 		return queryset
 
-	# def post_save(self, checklist, *args, **kwargs):
-	# 	if type(checklist.tags) is list:
-	# 		saved_checklist = Checklist.objects.get(pk=checklist.pk)
-	# 		for tag in checklist.tags:
-	# 			saved_checklist.tags.add(tag)
+	def get_serializer(self, *args, **kwargs):
+		if "data" in kwargs:
+			data = kwargs["data"]
+		    # check if many is required
+			if isinstance(data, list):
+				kwargs["many"] = True
+
+		return super(ChecklistViewSet, self).get_serializer(*args, **kwargs)
 
 	
 
