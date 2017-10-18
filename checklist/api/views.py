@@ -17,9 +17,8 @@ from rest_framework.permissions import(
 )
 
 
-
 class ChecklistViewSet(ModelViewSet):
-	permission_classes = [IsAuthenticated,IsOwner]
+	permission_classes = [IsAuthenticated,IsOwner] #only authenticated user can have access
 	queryset=Checklist.objects.all()
 	serializer_class = TaskSerializer
 
@@ -36,7 +35,7 @@ class ChecklistViewSet(ModelViewSet):
 		return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 	def perform_create(self,serializer):
-		serializer.save(user=self.request.user)
+		serializer.save(user=self.request.user) #saving against the requesting user
 
 	def list(self, request, *args, **kwargs):
 		queryset = self.filter_queryset(self.get_queryset())   
@@ -45,7 +44,7 @@ class ChecklistViewSet(ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user.id
-		queryset = Checklist.objects.filter(user=user)   
+		queryset = Checklist.objects.filter(user=user) #Get the checklist object associated with authenticated user
 		return queryset
 
 	def get_serializer(self, *args, **kwargs):

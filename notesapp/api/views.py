@@ -31,7 +31,6 @@ class NoteViewSet(ModelViewSet):
 	def perform_create(self,serializer):
 		serializer.save(user=self.request.user)
 
-     #overriding method list so that note list is shown to the user who has specificly created that note
 	def list(self,request,*args,**kwargs):
 		queryset = self.filter_queryset(self.get_queryset())
 		serializer = NoteSerializer(queryset,many=True,context={'request':request})
@@ -39,7 +38,7 @@ class NoteViewSet(ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user.id
-		queryset_list = Notes.objects.filter(user=user)
+		queryset_list = Notes.objects.filter(user=user) #get Note object associated with authenticated user
 		return queryset_list
 
 

@@ -24,32 +24,7 @@ class CustomtagsModelAdmin(admin.ModelAdmin):
 		model = Customtags
 
 
-
-
 admin.site.register(Checklist, ChecklistModelAdmin)
 admin.site.register(Todotask, TodotaskModelAdmin)
 admin.site.register(Customtags, CustomtagsModelAdmin)
 
-# #{
-#     "title": "Title is new ",
-#     "reminder_date": "2017-10-17T09:32:00Z",
-#     "tags": [
-#        "Hm"
-# ],
-#    "custom_tags": [
-#             {
-#                 "user_tag": "tag changed AGAIN"
-#             }
-#         ],
-
-#     "checklists": [
-#       {
-#                 "tick": true,
-#                 "task_text": "new world here"
-#             },
-#             {
-#                 "tick": true,
-#                 "task_text": "Do yoga"
-#             }
-# ]
-# }

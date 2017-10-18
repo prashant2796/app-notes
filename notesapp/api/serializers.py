@@ -29,7 +29,6 @@ class NoteSerializer(ModelSerializer):
     class Meta:
         model = Notes
         fields = [
-            # 'user',
             'url',
             'alert',
             'title',
@@ -37,7 +36,6 @@ class NoteSerializer(ModelSerializer):
             'created_date',
             'reminder_date',
             'tags',
-            # 'user_id'
         ]
 
         extra_kwargs = {
