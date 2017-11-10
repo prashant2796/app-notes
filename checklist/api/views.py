@@ -1,3 +1,10 @@
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+
+from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+from rest_auth.views import LoginView
+from rest_auth.social_serializers import TwitterLoginSerializer
+
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
 from rest_framework.filters import (
@@ -16,6 +23,13 @@ from rest_framework.permissions import(
     IsAdminUser,
 )
 
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
+
+class TwitterLogin(LoginView):
+    serializer_class = TwitterLoginSerializer
+    adapter_class = TwitterOAuthAdapter
 
 class ChecklistViewSet(ModelViewSet):
 	permission_classes = [IsAuthenticated,IsOwner] #only authenticated user can have access
