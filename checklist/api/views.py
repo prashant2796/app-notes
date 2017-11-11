@@ -1,3 +1,11 @@
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+
+from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+
+from rest_auth.views import LoginView
+from rest_auth.social_serializers import TwitterLoginSerializer
+
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
 from rest_framework.filters import (
@@ -17,9 +25,16 @@ from rest_framework.permissions import(
 )
 
 
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
+
+
+class TwitterLogin(LoginView):
+    serializer_class = TwitterLoginSerializer
+    adapter_class = TwitterOAuthAdapter
 
 class ChecklistViewSet(ModelViewSet):
-	permission_classes = [IsAuthenticated,IsOwner]
+	permission_classes = [IsAuthenticated,IsOwner] #only authenticated user can have access
 	queryset=Checklist.objects.all()
 	serializer_class = TaskSerializer
 
@@ -36,7 +51,7 @@ class ChecklistViewSet(ModelViewSet):
 		return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 	def perform_create(self,serializer):
-		serializer.save(user=self.request.user)
+		serializer.save(user=self.request.user) #saving against the requesting user
 
 	def list(self, request, *args, **kwargs):
 		queryset = self.filter_queryset(self.get_queryset())   
@@ -45,7 +60,7 @@ class ChecklistViewSet(ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user.id
-		queryset = Checklist.objects.filter(user=user)   
+		queryset = Checklist.objects.filter(user=user) #Get the checklist object associated with authenticated user
 		return queryset
 
 	def get_serializer(self, *args, **kwargs):

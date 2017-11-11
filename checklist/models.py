@@ -1,15 +1,8 @@
 from django.conf import settings
-
 from django.db import models
-
 from datetime import date
-
 from django.utils import timezone
 from multiselectfield import MultiSelectField
-
-
-
-
 
 # Create your models here.
 
@@ -23,7 +16,7 @@ class Checklist(models.Model):
     title = models.CharField(max_length=30,default='',blank=True)
     created_date = models.DateField(default=timezone.now().date())
     reminder_date = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True,auto_now_add=False,null=True)
+    date_modified = models.DateTimeField(auto_now=True,auto_now_add=False,null=True) #auto_now=True used for last updated timestamp 
     tags = MultiSelectField(choices=TAGS, blank=True, null=True)
 
     def __str__(self):
@@ -32,7 +25,8 @@ class Checklist(models.Model):
 
 
 class Todotask(models.Model):
-	checklist = models.ForeignKey(Checklist, related_name='checklists', default='', on_delete=models.CASCADE)
+	#Associating with checklist model using foreign key
+	checklist = models.ForeignKey(Checklist, related_name='checklists', default='', null=True,on_delete=models.CASCADE)
 	task_text = models.CharField(max_length=120,null=True,blank=True)
 	tick = models.BooleanField(default=False)
 
@@ -45,7 +39,7 @@ class Todotask(models.Model):
 		return self.task_text
 
 class Customtags(models.Model):
-	checklist = models.ForeignKey(Checklist, related_name='custom_tags', default=0, on_delete=models.CASCADE)
+	checklist = models.ForeignKey(Checklist, related_name='custom_tags', default=0,null=True, on_delete=models.CASCADE)
 	user_tag=models.CharField(max_length=50,blank=True,null=True)
 
 	def __str__(self):
