@@ -16,9 +16,11 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^rest-auth/', include('rest_auth.urls')),
-    url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
-    url(r'^rest-auth/twitter/$', TwitterLogin.as_view(), name='twitter_login'),
+    # url(r'^rest-auth/', include('rest_auth.urls')),
+    # url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
+    # url(r'^rest-auth/twitter/$', TwitterLogin.as_view(), name='twitter_login'),
+
+
 
 
 
