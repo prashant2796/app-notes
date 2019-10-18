@@ -54,7 +54,7 @@ six==1.10.0
 testpath==0.3
 tornado==4.5.2
 traitlets==4.3.2
-urllib3==1.22
+urllib3==1.24.2
 wcwidth==0.1.7
 widgetsnbextension==3.0.2
 wincertstore==0.2
