@@ -13,7 +13,7 @@ django-multiselectfield==0.1.8
 django-pagedown==0.1.1
 django-taggit==0.22.1
 django-taggit-serializer==0.1.5
-djangorestframework==3.6.4
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 entrypoints==0.2.3
 html5lib==0.9999999
